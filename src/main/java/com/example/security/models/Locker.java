@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -21,6 +23,10 @@ public class Locker {
 	
 	//@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "locker")
 	//private Member member;
+	
+	@ManyToOne(targetEntity = LockerType.class, cascade = CascadeType.ALL)
+	@JoinColumn(name = "locker_type_id")
+	private LockerType lockerType;
 	
 	public Locker() {
 		super();
@@ -63,7 +69,12 @@ public class Locker {
 		return "Locker [lockerId=" + lockerId + ", number=" + number + ", createdDate=" + createdDate + "]";
 	}
 	
+	public LockerType getLockerType() {
+		return lockerType;
+	}
 	
-	
+	public void setLockerType(LockerType lockerType) {
+		this.lockerType = lockerType;
+	}
 	
 }

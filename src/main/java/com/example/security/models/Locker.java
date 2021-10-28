@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,32 +11,41 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Locker {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long lockerId;
 	private Integer number;
+	private String status;
 	private Date createdDate = new Date();
-	
-	//@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "locker")
-	//private Member member;
-	
+
+	@OneToOne(mappedBy = "locker", optional = true)
+	@JsonBackReference
+	private Member member;
+
 	@ManyToOne(targetEntity = LockerType.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "locker_type_id")
 	private LockerType lockerType;
-	
+
 	public Locker() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Locker(Long lockerId, Integer number, Date createdDate) {
+	public Locker(Long lockerId, Integer number, String status, Date createdDate, Member member,
+			LockerType lockerType) {
 		super();
 		this.lockerId = lockerId;
 		this.number = number;
+		this.status = status;
 		this.createdDate = createdDate;
+		this.member = member;
+		this.lockerType = lockerType;
 	}
 
 	public Long getLockerId() {
@@ -56,6 +64,14 @@ public class Locker {
 		this.number = number;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -66,15 +82,16 @@ public class Locker {
 
 	@Override
 	public String toString() {
-		return "Locker [lockerId=" + lockerId + ", number=" + number + ", createdDate=" + createdDate + "]";
+		return "Locker [lockerId=" + lockerId + ", number=" + number + ", status=" + status + ", createdDate="
+				+ createdDate + ", member=" + member + ", lockerType=" + lockerType + "]";
 	}
-	
+
 	public LockerType getLockerType() {
 		return lockerType;
 	}
-	
+
 	public void setLockerType(LockerType lockerType) {
 		this.lockerType = lockerType;
 	}
-	
+
 }

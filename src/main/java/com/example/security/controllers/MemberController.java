@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.security.models.Member;
@@ -21,35 +23,34 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
-	@GetMapping("/members")
+	@RequestMapping(method = RequestMethod.GET, value = "/members")
 	public ResponseEntity<List<Member>> getAll(){
 		return ResponseEntity.ok(memberService.getAll());
 	}
 	
-	@PostMapping("/member")
+	@RequestMapping(method = RequestMethod.POST, value = "/member")
 	public ResponseEntity<Member> addMember(@RequestBody Member member){
 		return ResponseEntity.ok(memberService.addMember(member));
 	}
 	
-	@GetMapping("/member/{memberId}")
+	@RequestMapping(method = RequestMethod.GET, value = "/member/{memberId}")
 	public ResponseEntity<Member> getMember(@PathVariable Long memberId){
 		return ResponseEntity.ok(memberService.getMember(memberId));
 	}
 	
-	@DeleteMapping("/member/{memberId}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/member/{memberId}")
 	public void deleteMember(@PathVariable Long memberId){
 		memberService.deleteMember(memberId);
 	}
 	
-	@PutMapping("/member/{memberId}")
+	@RequestMapping(method = RequestMethod.PUT, value = "/member/{memberId}")
 	public ResponseEntity<Member> updateMember(@PathVariable Long memberId, @RequestBody Member memberDetail){
 		try {
 			return ResponseEntity.ok(memberService.updateMember(memberId, memberDetail));
 		} catch (Exception e) {
 			return ResponseEntity.notFound().build();
-		}
-		
-		
+		}	
+
 	}
 	
 }

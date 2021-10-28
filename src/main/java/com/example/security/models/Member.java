@@ -9,7 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Member {
@@ -21,24 +27,32 @@ public class Member {
 	private String email;
 	private String phone;
 	private Date createdDate = new Date();
-	
-	@OneToOne(targetEntity = Locker.class, cascade = CascadeType.ALL)
+
+	@OneToOne(targetEntity = Locker.class, optional = true)
 	@JoinColumn(name = "locker_id")
+	@JsonManagedReference
 	private Locker locker;
+	
+	//@ManyToMany(cascade = CascadeType.ALL)
+	//@JoinTable(name = "Employee_shifts", joinColumns = {@JoinColumn(name = "member_id")}, inverseJoinColumns = {@JoinColumn(name = "shift_id")})
+
 
 	public Member() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Member(Long memberId, String name, String email, String phone, Date createdDate) {
+	public Member(Long memberId, String name, String email, String phone, Date createdDate, Locker locker) {
 		super();
 		this.memberId = memberId;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.createdDate = createdDate;
+		this.locker = locker;
 	}
+
+
 
 	public Long getMemberId() {
 		return memberId;
@@ -83,15 +97,15 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", name=" + name + ", email=" + email + ", phone=" + phone
-				+ ", createdDate=" + createdDate + "]";
+				+ ", createdDate=" + createdDate + ", locker=" + locker + "]";
 	}
-	
+
 	public Locker getLocker() {
 		return locker;
 	}
-	
+
 	public void setLocker(Locker locker) {
 		this.locker = locker;
 	}
-	
+
 }

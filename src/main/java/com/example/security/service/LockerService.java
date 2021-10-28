@@ -38,9 +38,10 @@ public class LockerService {
 		Optional<Locker> lockerData = lockerRepository.findById(lockerId);		
 		Locker locker = lockerData.get();
 		locker.setNumber(lockerDetail.getNumber());
+		locker.setStatus(lockerDetail.getStatus());
+		locker.setLockerType(lockerDetail.getLockerType());
 		lockerRepository.save(locker);
 		return locker;
 	}
-
 	
 }

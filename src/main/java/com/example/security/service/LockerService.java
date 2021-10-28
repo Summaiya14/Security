@@ -41,6 +41,7 @@ public class LockerService {
 		locker.setStatus(lockerDetail.getStatus());
 		locker.setLockerType(lockerDetail.getLockerType());
 		lockerRepository.save(locker);
+		//comment by mazhar
 		return locker;
 	}
 	

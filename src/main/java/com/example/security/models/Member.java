@@ -2,19 +2,13 @@ package com.example.security.models;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -32,10 +26,6 @@ public class Member {
 	@JoinColumn(name = "locker_id")
 	@JsonManagedReference
 	private Locker locker;
-	
-	//@ManyToMany(cascade = CascadeType.ALL)
-	//@JoinTable(name = "Employee_shifts", joinColumns = {@JoinColumn(name = "member_id")}, inverseJoinColumns = {@JoinColumn(name = "shift_id")})
-
 
 	public Member() {
 		super();

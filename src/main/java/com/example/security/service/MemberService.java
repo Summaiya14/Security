@@ -17,7 +17,6 @@ public class MemberService {
 	
 	@Autowired
 	MemberRepository memberRepository;
-	Locker locker;
 	
 	public List<Member> getAll(){
 		return memberRepository.findAll();

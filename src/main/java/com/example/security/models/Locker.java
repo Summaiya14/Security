@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Locker {
@@ -24,7 +23,7 @@ public class Locker {
 	private String status;
 	private Date createdDate = new Date();
 
-	@OneToOne(mappedBy = "locker", optional = true)
+	@OneToOne(mappedBy = "locker", optional = true, cascade = CascadeType.ALL)
 	@JsonBackReference
 	private Member member;
 
@@ -80,12 +79,22 @@ public class Locker {
 		this.createdDate = createdDate;
 	}
 
+	
+	
 	@Override
 	public String toString() {
 		return "Locker [lockerId=" + lockerId + ", number=" + number + ", status=" + status + ", createdDate="
 				+ createdDate + ", member=" + member + ", lockerType=" + lockerType + "]";
 	}
 
+	public Member getMember() {
+		return member;
+	}
+	
+	public void setMember(Member member) {
+		this.member = member;
+	}
+	
 	public LockerType getLockerType() {
 		return lockerType;
 	}

@@ -38,10 +38,18 @@ public class EmployeeService {
 	public Employee updateEmployee(long employeeId, Employee employeeDetail) {
 		Optional<Employee> employeeData = employeeRepository.findById(employeeId);
 		Employee employee = employeeData.get();
-		employee.setName(employeeDetail.getName());
-		employee.setEmail(employeeDetail.getEmail());
-		employee.setPhone(employeeDetail.getPhone());
-		employee.setProjects(employeeDetail.getProjects());
+		if (employeeDetail.getName() != null) {
+			employee.setName(employeeDetail.getName());
+		}
+		if (employeeDetail.getEmail() != null) {
+			employee.setEmail(employeeDetail.getEmail());
+		}
+		if (employeeDetail.getPhone() != null) {
+			employee.setPhone(employeeDetail.getPhone());
+		}
+		if (employeeDetail.getProjects() != null) {
+			employee.setProjects(employeeDetail.getProjects());
+		}
 		employeeRepository.save(employee);
 		return employee;
 	}
